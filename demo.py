@@ -8,6 +8,7 @@ from bs4 import ResultSet
 import numpy as np
 from treelib import Tree
 import copy
+import random
 
 NONTERMINAL = 0
 BOP = 1
@@ -42,14 +43,15 @@ def GetTerminateRules(low=0, high=5):
 
 TerminateRules = GetTerminateRules(0,upbound)
 
-NonTerminateRules=[
-    pattern((BOP, '+'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
-    pattern((BOP, '/'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
-    pattern((UOP, 'sqrt'), [(NONTERMINAL, 'S')]),
-    pattern((UOP, 'arcsin'), [(NONTERMINAL, 'S')]),
-]
+NonTerminateRules={
+    '+':pattern((BOP, '+'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
+    '/':pattern((BOP, '/'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
+    '*':pattern((BOP, '*'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
+    'sqrt':pattern((UOP, 'sqrt'), [(NONTERMINAL, 'S')]),
+    'arcsin':pattern((UOP, 'arcsin'), [(NONTERMINAL, 'S')]),
+}
 
-Rules = TerminateRules + NonTerminateRules
+#Rules = TerminateRules + NonTerminateRules
 
 class Expression():
     def __init__(self, root_node):
@@ -65,41 +67,39 @@ class Expression():
 
     def DecideRules(self, uid):
         rootDepth = self.ast[uid].data.depth
-        NTPart = NonTerminateRules
+        NTPart = copy.deepcopy(NonTerminateRules)
         TPart = GetTerminateRules(0,upbound)
         if self.ast[uid].is_root():
-            return Rules        
+            return list(NTPart.values()) + TPart 
 
         parentNode = self.ast.parent(uid).data
         if parentNode.value=='sqrt':
             TPart = GetTerminateRules(2,upbound)
+            NTPart.pop('sqrt')
         elif parentNode.value == 'arcsin':
             TPart = GetTerminateRules(0,1)
+            NTPart.pop('arcsin')
         elif parentNode.value == '+':
             TPart = GetTerminateRules(1,upbound)
-            NTPart=[
-                pattern((BOP, '/'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
-                pattern((UOP, 'sqrt'), [(NONTERMINAL, 'S')]),
-                pattern((UOP, 'arcsin'), [(NONTERMINAL, 'S')]),
-            ]
+            NTPart.pop('+')
         elif parentNode.value =='/':
-            NTPart=[
-                pattern((BOP, '+'), [(NONTERMINAL, 'S1'), (NONTERMINAL, 'S2')]),
-                pattern((UOP, 'sqrt'), [(NONTERMINAL, 'S')]),
-                pattern((UOP, 'arcsin'), [(NONTERMINAL, 'S')]),
-            ]
+            NTPart.pop('/')
             TPart = GetTerminateRules(1,upbound)
+        elif parentNode.value == '*':
+            NTPart.pop('*')
+            TPart = GetTerminateRules(2,upbound)
 
         if self.depth >= GlobalDepth:
-            NTPart = []
+            NTPart = {}
         
-        return NTPart + TPart
+        return list(NTPart.values()) + TPart
 
 
     def product(self):
         # self.expr = [NonTerminal('S'), Terminal('+'), NonTerminal('S')]
         result = []
-        uid = self.NonTerminals[0]
+        choice = random.randint(0, len(self.NonTerminals)-1)
+        uid = self.NonTerminals[choice]
         rootDepth = self.ast[uid].data.depth
         productRules = self.DecideRules(uid)
         
@@ -135,6 +135,8 @@ def EvalExpr(expr):
             return '('+siblings[0]+'+'+siblings[1]+')'
         elif rootData.value=='/':
             return siblings[0]+'/'+siblings[1]
+        elif rootData.value=='*':
+            return siblings[0]+'*'+siblings[1]
         elif rootData.value == 'sqrt':
             return 'sqrt('+siblings[0]+')'
         elif rootData.value == 'arcsin':
@@ -154,7 +156,7 @@ queue.append(start)
 def verify(candidate):
     result = EvalExpr(candidate)
     print(result)
-    if result == "2/arcsin(1/sqrt(3))":
+    if result == "2*arcsin(1/sqrt(3))":
         print("done")
         return True    
     # if len(result)>=2 and result[0]=='2' and result[1]=='/':
