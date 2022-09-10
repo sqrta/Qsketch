@@ -153,29 +153,28 @@ start = Expression(S)
 
 queue.append(start)
 
-def verify(candidate):
+def verify(candidate, to_code, goal):
     result = EvalExpr(candidate)
-    print(result)
-    if result == "2*arcsin(1/sqrt(3))":
-        print("done")
-        return True    
+    # print(result)
+    code = to_code(result)
+    return exec(code) == goal
+
     # if len(result)>=2 and result[0]=='2' and result[1]=='/':
     #     print(result)
 
-    
-startTime = time.time()
+def solve_scl(callback, goal):
+    # startTime = time.time()
+            
+    while len(queue)>0:
+        candidate = queue.pop(0) # candiate: Expression
+        #print(EvalExpr(candidate))
         
-while len(queue)>0:
-    candidate = queue.pop(0) # candiate: Expression
-    #print(EvalExpr(candidate))
-    
-    if not candidate.Have_Nonterminal():
-        if verify(candidate):
-            break
-    else:
-        expressions = candidate.product()
-        for expression in expressions:
-            queue.append(expression)
-endTime = time.time()
-print("Use {0}s.".format(endTime-startTime))
-    
+        if not candidate.Have_Nonterminal():
+            if verify(candidate, callback, goal):
+                break
+        else:
+            expressions = candidate.product()
+            for expression in expressions:
+                queue.append(expression)
+    # endTime = time.time()
+    # print("Use {0}s.".format(endTime-startTime))
