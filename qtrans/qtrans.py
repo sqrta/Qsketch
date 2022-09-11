@@ -1,5 +1,7 @@
+import io
 import sys
 import re
+import tokenize
 
 def open_file_with(callback):
     file_path = sys.argv[1]
@@ -14,30 +16,50 @@ def open_file_with(callback):
         print(callback(f.read(), params))
 
 def fill_in_hole(s: str, params):
-    matches = re.findall("[^a-zA-Z0-9_]__\d*[^a-zA-Z_]", s)
-    wildcards = list(filter(lambda m: len(m) == 2, matches))
-    indexed_holes = list(filter(lambda m: len(m) > 2, matches))
-    raw_indices = list(map(lambda s: try_parse_int(s[2 :]), indexed_holes))
-    indices = list(filter(lambda i: i > 0, raw_indices))
-    max_index = max(indices)
-
+    tokens = [token for token in tokenize.generate_tokens(io.StringIO(s).readline)]
+    wildcards = list(filter(lambda t: t.string == "__", tokens))
+    indexed_holes = list(filter(lambda t: re.match("^__\d+$", t.string) is not None, tokens))
+    indices = []
+    indices = sorted(set(map(lambda t: int(t.string[2 :]), indexed_holes)))
+    
+    steps = []
     pointer = 0
-    for i in range(1, max_index):
-        if i in indices:
-            for m in re.finditer("[^a-zA-Z0-9]__" + str(i) +"[^a-zA-Z]", s):
-                s = modify_in_place(m.start(), m.end(), s, params[pointer])
+    for i in indices:
+        def l(stri, p):
+            return lambda ts: fill_single(ts, "__" + stri, p)
+        steps.append(l(str(i), params[pointer]))
+        # if i in indices:
+        #     for m in re.finditer("__" + str(i), s):
+        #         steps.append(lambda: modify_in_place(m.start(), m.end(), s, params[pointer]))
+        
+        pointer = pointer + 1
 
-            pointer = pointer + 1
+    for step in steps:
+        tokens = step(tokens)
+    steps = []
 
-    for m in re.finditer("[^a-zA-Z0-9]__[^a-zA-Z]", s):
-        s = modify_in_place(m.start(), m.end(), s, params[pointer])
+    for hole in wildcards:
+        i = tokens.index(hole)
+        tokens.remove(hole)
+        tokens.insert(i, hole._replace(string = params[pointer]))
+        
         if (pointer < len(params)):
-            wildcards[i] = params[pointer]
             pointer = pointer + 1
         else:
             break
+    # for m in re.finditer("__", s):
+    #     steps.append(modify_in_place(m.start(), m.end(), s, params[pointer]))
+    #     if (pointer < len(params)):
+    #         # wildcards[i] = params[pointer]
+    #         pointer = pointer + 1
+    #     else:
+    #         break
 
-    return s
+    # for step in steps:
+    #     s = step()
+    # steps = []
+
+    return tokenize.untokenize(tokens)
     
     # mat_hole_span = re.search("??(", s).span()
     # to_full_str = lambda v: s.replace("??", str(v))
@@ -49,10 +71,9 @@ def fill_in_hole(s: str, params):
     #     return demo.solve_scl(to_full_str)
         # scl_hole_span = re.search("??", s).span()
 
-def modify_in_place(start: int, end: int, old_s: str, sub: str):
-    before = old_s[0 : start - 1]
-    after = old_s[end + 1 :]
-    return before + sub + after
+def fill_single(tokens: list[tokenize.TokenInfo], hole: str, value: str):
+    # tokens = [token for token in tokenize.generate_tokens(io.StringIO(input).readline)]
+    return list(map(lambda t: t._replace(string = value) if t.string == hole else t, tokens))
 
 def try_get_mat():
     return
@@ -67,4 +88,6 @@ def try_parse_int(s):
         return -1
 
 if __name__ == "__main__":
-    open_file_with(fill_in_hole)
+    ret = fill_in_hole("test __2 __3 __ __5 __ __3 __", ["a", "b", "c", "d", "e", "f"])
+    pass
+    # open_file_with(fill_in_hole)
