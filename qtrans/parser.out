@@ -1,0 +1,1292 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> vexpression
+Rule 1     vexpression -> sexpression * vexpression
+Rule 2     vexpression -> sexpression vexpression
+Rule 3     vexpression -> vexpression + vexpression
+Rule 4     vexpression -> vexpression - vexpression
+Rule 5     vexpression -> T
+Rule 6     sexpression -> sexpression * sexpression
+Rule 7     sexpression -> sexpression sexpression
+Rule 8     sexpression -> sexpression + sexpression
+Rule 9     sexpression -> sexpression - sexpression
+Rule 10    sexpression -> sexpression / sexpression
+Rule 11    sexpression -> sexpression ^ sexpression
+Rule 12    statement -> sexpression
+Rule 13    sexpression -> - sexpression
+Rule 14    sexpression -> ( sexpression )
+Rule 15    sexpression -> [ sexpression ]
+Rule 16    sexpression -> { sexpression }
+Rule 17    sexpression -> NUMBER
+Rule 18    sexpression -> NAME
+
+Terminals, with rules where they appear
+
+(                    : 14
+)                    : 14
+*                    : 1 6
++                    : 3 8
+-                    : 4 9 13
+/                    : 10
+NAME                 : 18
+NUMBER               : 17
+T                    : 5
+[                    : 15
+]                    : 15
+^                    : 11
+error                : 
+{                    : 16
+}                    : 16
+
+Nonterminals, with rules where they appear
+
+sexpression          : 1 2 6 6 7 7 8 8 9 9 10 10 11 11 12 13 14 15 16
+statement            : 
+vexpression          : 1 2 3 3 4 4 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . vexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    T               shift and go to state 4
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    vexpression                    shift and go to state 1
+    sexpression                    shift and go to state 2
+
+state 1
+
+    (0) S' -> vexpression .
+    (3) vexpression -> vexpression . + vexpression
+    (4) vexpression -> vexpression . - vexpression
+
+    +               shift and go to state 10
+    -               shift and go to state 11
+
+
+state 2
+
+    (1) vexpression -> sexpression . * vexpression
+    (2) vexpression -> sexpression . vexpression
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    *               shift and go to state 13
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    T               shift and go to state 4
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 12
+    vexpression                    shift and go to state 14
+
+state 3
+
+    (13) sexpression -> - . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 19
+
+state 4
+
+    (5) vexpression -> T .
+
+    +               reduce using rule 5 (vexpression -> T .)
+    -               reduce using rule 5 (vexpression -> T .)
+    $end            reduce using rule 5 (vexpression -> T .)
+
+
+state 5
+
+    (14) sexpression -> ( . sexpression )
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 20
+
+state 6
+
+    (15) sexpression -> [ . sexpression ]
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 21
+
+state 7
+
+    (16) sexpression -> { . sexpression }
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 22
+
+state 8
+
+    (17) sexpression -> NUMBER .
+
+    *               reduce using rule 17 (sexpression -> NUMBER .)
+    +               reduce using rule 17 (sexpression -> NUMBER .)
+    -               reduce using rule 17 (sexpression -> NUMBER .)
+    /               reduce using rule 17 (sexpression -> NUMBER .)
+    ^               reduce using rule 17 (sexpression -> NUMBER .)
+    T               reduce using rule 17 (sexpression -> NUMBER .)
+    (               reduce using rule 17 (sexpression -> NUMBER .)
+    [               reduce using rule 17 (sexpression -> NUMBER .)
+    {               reduce using rule 17 (sexpression -> NUMBER .)
+    NUMBER          reduce using rule 17 (sexpression -> NUMBER .)
+    NAME            reduce using rule 17 (sexpression -> NUMBER .)
+    )               reduce using rule 17 (sexpression -> NUMBER .)
+    ]               reduce using rule 17 (sexpression -> NUMBER .)
+    }               reduce using rule 17 (sexpression -> NUMBER .)
+
+
+state 9
+
+    (18) sexpression -> NAME .
+
+    *               reduce using rule 18 (sexpression -> NAME .)
+    +               reduce using rule 18 (sexpression -> NAME .)
+    -               reduce using rule 18 (sexpression -> NAME .)
+    /               reduce using rule 18 (sexpression -> NAME .)
+    ^               reduce using rule 18 (sexpression -> NAME .)
+    T               reduce using rule 18 (sexpression -> NAME .)
+    (               reduce using rule 18 (sexpression -> NAME .)
+    [               reduce using rule 18 (sexpression -> NAME .)
+    {               reduce using rule 18 (sexpression -> NAME .)
+    NUMBER          reduce using rule 18 (sexpression -> NAME .)
+    NAME            reduce using rule 18 (sexpression -> NAME .)
+    )               reduce using rule 18 (sexpression -> NAME .)
+    ]               reduce using rule 18 (sexpression -> NAME .)
+    }               reduce using rule 18 (sexpression -> NAME .)
+
+
+state 10
+
+    (3) vexpression -> vexpression + . vexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    T               shift and go to state 4
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    vexpression                    shift and go to state 23
+    sexpression                    shift and go to state 2
+
+state 11
+
+    (4) vexpression -> vexpression - . vexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    T               shift and go to state 4
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    vexpression                    shift and go to state 24
+    sexpression                    shift and go to state 2
+
+state 12
+
+    (7) sexpression -> sexpression sexpression .
+    (1) vexpression -> sexpression . * vexpression
+    (2) vexpression -> sexpression . vexpression
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for T resolved as shift
+  ! shift/reduce conflict for ( resolved as shift
+  ! shift/reduce conflict for [ resolved as shift
+  ! shift/reduce conflict for { resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
+    *               shift and go to state 13
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    T               shift and go to state 4
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+  ! *               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! +               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! -               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! /               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! ^               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! T               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! (               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! [               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! {               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! NUMBER          [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! NAME            [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+
+    sexpression                    shift and go to state 12
+    vexpression                    shift and go to state 14
+
+state 13
+
+    (1) vexpression -> sexpression * . vexpression
+    (6) sexpression -> sexpression * . sexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    T               shift and go to state 4
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 25
+    vexpression                    shift and go to state 26
+
+state 14
+
+    (2) vexpression -> sexpression vexpression .
+    (3) vexpression -> vexpression . + vexpression
+    (4) vexpression -> vexpression . - vexpression
+
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+    $end            reduce using rule 2 (vexpression -> sexpression vexpression .)
+    +               shift and go to state 10
+    -               shift and go to state 11
+
+  ! +               [ reduce using rule 2 (vexpression -> sexpression vexpression .) ]
+  ! -               [ reduce using rule 2 (vexpression -> sexpression vexpression .) ]
+
+
+state 15
+
+    (8) sexpression -> sexpression + . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 27
+
+state 16
+
+    (9) sexpression -> sexpression - . sexpression
+    (13) sexpression -> - . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 28
+
+state 17
+
+    (10) sexpression -> sexpression / . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 29
+
+state 18
+
+    (11) sexpression -> sexpression ^ . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 30
+
+state 19
+
+    (13) sexpression -> - sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    *               reduce using rule 13 (sexpression -> - sexpression .)
+    +               reduce using rule 13 (sexpression -> - sexpression .)
+    -               reduce using rule 13 (sexpression -> - sexpression .)
+    /               reduce using rule 13 (sexpression -> - sexpression .)
+    ^               reduce using rule 13 (sexpression -> - sexpression .)
+    T               reduce using rule 13 (sexpression -> - sexpression .)
+    (               reduce using rule 13 (sexpression -> - sexpression .)
+    [               reduce using rule 13 (sexpression -> - sexpression .)
+    {               reduce using rule 13 (sexpression -> - sexpression .)
+    NUMBER          reduce using rule 13 (sexpression -> - sexpression .)
+    NAME            reduce using rule 13 (sexpression -> - sexpression .)
+    )               reduce using rule 13 (sexpression -> - sexpression .)
+    ]               reduce using rule 13 (sexpression -> - sexpression .)
+    }               reduce using rule 13 (sexpression -> - sexpression .)
+
+  ! *               [ shift and go to state 32 ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! /               [ shift and go to state 17 ]
+  ! ^               [ shift and go to state 18 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 31
+
+state 20
+
+    (14) sexpression -> ( sexpression . )
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    )               shift and go to state 33
+    *               shift and go to state 32
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 31
+
+state 21
+
+    (15) sexpression -> [ sexpression . ]
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    ]               shift and go to state 34
+    *               shift and go to state 32
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 31
+
+state 22
+
+    (16) sexpression -> { sexpression . }
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    }               shift and go to state 35
+    *               shift and go to state 32
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 31
+
+state 23
+
+    (3) vexpression -> vexpression + vexpression .
+    (3) vexpression -> vexpression . + vexpression
+    (4) vexpression -> vexpression . - vexpression
+
+    +               reduce using rule 3 (vexpression -> vexpression + vexpression .)
+    -               reduce using rule 3 (vexpression -> vexpression + vexpression .)
+    $end            reduce using rule 3 (vexpression -> vexpression + vexpression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+
+
+state 24
+
+    (4) vexpression -> vexpression - vexpression .
+    (3) vexpression -> vexpression . + vexpression
+    (4) vexpression -> vexpression . - vexpression
+
+    +               reduce using rule 4 (vexpression -> vexpression - vexpression .)
+    -               reduce using rule 4 (vexpression -> vexpression - vexpression .)
+    $end            reduce using rule 4 (vexpression -> vexpression - vexpression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+
+
+state 25
+
+    (6) sexpression -> sexpression * sexpression .
+    (1) vexpression -> sexpression . * vexpression
+    (2) vexpression -> sexpression . vexpression
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (1) vexpression -> . sexpression * vexpression
+    (2) vexpression -> . sexpression vexpression
+    (3) vexpression -> . vexpression + vexpression
+    (4) vexpression -> . vexpression - vexpression
+    (5) vexpression -> . T
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    *               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    +               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    -               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    /               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    ^               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    T               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    (               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    [               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    {               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    NUMBER          reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    NAME            reduce using rule 6 (sexpression -> sexpression * sexpression .)
+
+  ! *               [ shift and go to state 13 ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! /               [ shift and go to state 17 ]
+  ! ^               [ shift and go to state 18 ]
+  ! T               [ shift and go to state 4 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 12
+    vexpression                    shift and go to state 14
+
+state 26
+
+    (1) vexpression -> sexpression * vexpression .
+    (3) vexpression -> vexpression . + vexpression
+    (4) vexpression -> vexpression . - vexpression
+
+    +               reduce using rule 1 (vexpression -> sexpression * vexpression .)
+    -               reduce using rule 1 (vexpression -> sexpression * vexpression .)
+    $end            reduce using rule 1 (vexpression -> sexpression * vexpression .)
+
+  ! +               [ shift and go to state 10 ]
+  ! -               [ shift and go to state 11 ]
+
+
+state 27
+
+    (8) sexpression -> sexpression + sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    +               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    -               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    ^               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    T               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    (               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    [               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    {               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    NUMBER          reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    NAME            reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    )               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    ]               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    }               reduce using rule 8 (sexpression -> sexpression + sexpression .)
+    *               shift and go to state 32
+    /               shift and go to state 17
+
+  ! *               [ reduce using rule 8 (sexpression -> sexpression + sexpression .) ]
+  ! /               [ reduce using rule 8 (sexpression -> sexpression + sexpression .) ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! ^               [ shift and go to state 18 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 31
+
+state 28
+
+    (9) sexpression -> sexpression - sexpression .
+    (13) sexpression -> - sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+  ! reduce/reduce conflict for * resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for + resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for - resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for / resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for ^ resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for T resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for ( resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for [ resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for { resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for NAME resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for ) resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for ] resolved using rule 9 (sexpression -> sexpression - sexpression .)
+  ! reduce/reduce conflict for } resolved using rule 9 (sexpression -> sexpression - sexpression .)
+    +               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    -               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    ^               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    T               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    (               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    [               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    {               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    NUMBER          reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    NAME            reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    )               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    ]               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    }               reduce using rule 9 (sexpression -> sexpression - sexpression .)
+    *               shift and go to state 32
+    /               shift and go to state 17
+
+  ! *               [ reduce using rule 9 (sexpression -> sexpression - sexpression .) ]
+  ! /               [ reduce using rule 9 (sexpression -> sexpression - sexpression .) ]
+  ! *               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! +               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! -               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! /               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! ^               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! T               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! (               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! [               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! {               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! NUMBER          [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! NAME            [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! )               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! ]               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! }               [ reduce using rule 13 (sexpression -> - sexpression .) ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! ^               [ shift and go to state 18 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 31
+
+state 29
+
+    (10) sexpression -> sexpression / sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    *               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    +               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    -               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    /               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    ^               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    T               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    (               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    [               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    {               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    NUMBER          reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    NAME            reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    )               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    ]               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+    }               reduce using rule 10 (sexpression -> sexpression / sexpression .)
+
+  ! *               [ shift and go to state 32 ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! /               [ shift and go to state 17 ]
+  ! ^               [ shift and go to state 18 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 31
+
+state 30
+
+    (11) sexpression -> sexpression ^ sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for ( resolved as shift
+  ! shift/reduce conflict for [ resolved as shift
+  ! shift/reduce conflict for { resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
+    T               reduce using rule 11 (sexpression -> sexpression ^ sexpression .)
+    )               reduce using rule 11 (sexpression -> sexpression ^ sexpression .)
+    ]               reduce using rule 11 (sexpression -> sexpression ^ sexpression .)
+    }               reduce using rule 11 (sexpression -> sexpression ^ sexpression .)
+    *               shift and go to state 32
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+  ! *               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! +               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! -               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! /               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! ^               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! (               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! [               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! {               [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! NUMBER          [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+  ! NAME            [ reduce using rule 11 (sexpression -> sexpression ^ sexpression .) ]
+
+    sexpression                    shift and go to state 31
+
+state 31
+
+    (7) sexpression -> sexpression sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for ( resolved as shift
+  ! shift/reduce conflict for [ resolved as shift
+  ! shift/reduce conflict for { resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for NAME resolved as shift
+    T               reduce using rule 7 (sexpression -> sexpression sexpression .)
+    )               reduce using rule 7 (sexpression -> sexpression sexpression .)
+    ]               reduce using rule 7 (sexpression -> sexpression sexpression .)
+    }               reduce using rule 7 (sexpression -> sexpression sexpression .)
+    *               shift and go to state 32
+    +               shift and go to state 15
+    -               shift and go to state 16
+    /               shift and go to state 17
+    ^               shift and go to state 18
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+  ! *               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! +               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! -               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! /               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! ^               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! (               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! [               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! {               [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! NUMBER          [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+  ! NAME            [ reduce using rule 7 (sexpression -> sexpression sexpression .) ]
+
+    sexpression                    shift and go to state 31
+
+state 32
+
+    (6) sexpression -> sexpression * . sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    -               shift and go to state 3
+    (               shift and go to state 5
+    [               shift and go to state 6
+    {               shift and go to state 7
+    NUMBER          shift and go to state 8
+    NAME            shift and go to state 9
+
+    sexpression                    shift and go to state 36
+
+state 33
+
+    (14) sexpression -> ( sexpression ) .
+
+    *               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    +               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    -               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    /               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    ^               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    T               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    (               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    [               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    {               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    NUMBER          reduce using rule 14 (sexpression -> ( sexpression ) .)
+    NAME            reduce using rule 14 (sexpression -> ( sexpression ) .)
+    )               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    ]               reduce using rule 14 (sexpression -> ( sexpression ) .)
+    }               reduce using rule 14 (sexpression -> ( sexpression ) .)
+
+
+state 34
+
+    (15) sexpression -> [ sexpression ] .
+
+    *               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    +               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    -               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    /               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    ^               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    T               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    (               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    [               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    {               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    NUMBER          reduce using rule 15 (sexpression -> [ sexpression ] .)
+    NAME            reduce using rule 15 (sexpression -> [ sexpression ] .)
+    )               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    ]               reduce using rule 15 (sexpression -> [ sexpression ] .)
+    }               reduce using rule 15 (sexpression -> [ sexpression ] .)
+
+
+state 35
+
+    (16) sexpression -> { sexpression } .
+
+    *               reduce using rule 16 (sexpression -> { sexpression } .)
+    +               reduce using rule 16 (sexpression -> { sexpression } .)
+    -               reduce using rule 16 (sexpression -> { sexpression } .)
+    /               reduce using rule 16 (sexpression -> { sexpression } .)
+    ^               reduce using rule 16 (sexpression -> { sexpression } .)
+    T               reduce using rule 16 (sexpression -> { sexpression } .)
+    (               reduce using rule 16 (sexpression -> { sexpression } .)
+    [               reduce using rule 16 (sexpression -> { sexpression } .)
+    {               reduce using rule 16 (sexpression -> { sexpression } .)
+    NUMBER          reduce using rule 16 (sexpression -> { sexpression } .)
+    NAME            reduce using rule 16 (sexpression -> { sexpression } .)
+    )               reduce using rule 16 (sexpression -> { sexpression } .)
+    ]               reduce using rule 16 (sexpression -> { sexpression } .)
+    }               reduce using rule 16 (sexpression -> { sexpression } .)
+
+
+state 36
+
+    (6) sexpression -> sexpression * sexpression .
+    (6) sexpression -> sexpression . * sexpression
+    (7) sexpression -> sexpression . sexpression
+    (8) sexpression -> sexpression . + sexpression
+    (9) sexpression -> sexpression . - sexpression
+    (10) sexpression -> sexpression . / sexpression
+    (11) sexpression -> sexpression . ^ sexpression
+    (6) sexpression -> . sexpression * sexpression
+    (7) sexpression -> . sexpression sexpression
+    (8) sexpression -> . sexpression + sexpression
+    (9) sexpression -> . sexpression - sexpression
+    (10) sexpression -> . sexpression / sexpression
+    (11) sexpression -> . sexpression ^ sexpression
+    (13) sexpression -> . - sexpression
+    (14) sexpression -> . ( sexpression )
+    (15) sexpression -> . [ sexpression ]
+    (16) sexpression -> . { sexpression }
+    (17) sexpression -> . NUMBER
+    (18) sexpression -> . NAME
+
+    *               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    +               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    -               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    /               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    ^               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    (               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    [               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    {               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    NUMBER          reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    NAME            reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    T               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    )               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    ]               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+    }               reduce using rule 6 (sexpression -> sexpression * sexpression .)
+
+  ! *               [ shift and go to state 32 ]
+  ! +               [ shift and go to state 15 ]
+  ! -               [ shift and go to state 16 ]
+  ! /               [ shift and go to state 17 ]
+  ! ^               [ shift and go to state 18 ]
+  ! (               [ shift and go to state 5 ]
+  ! [               [ shift and go to state 6 ]
+  ! {               [ shift and go to state 7 ]
+  ! NUMBER          [ shift and go to state 8 ]
+  ! NAME            [ shift and go to state 9 ]
+
+    sexpression                    shift and go to state 31
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for * in state 12 resolved as shift
+WARNING: shift/reduce conflict for + in state 12 resolved as shift
+WARNING: shift/reduce conflict for - in state 12 resolved as shift
+WARNING: shift/reduce conflict for / in state 12 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 12 resolved as shift
+WARNING: shift/reduce conflict for T in state 12 resolved as shift
+WARNING: shift/reduce conflict for ( in state 12 resolved as shift
+WARNING: shift/reduce conflict for [ in state 12 resolved as shift
+WARNING: shift/reduce conflict for { in state 12 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 12 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 12 resolved as shift
+WARNING: shift/reduce conflict for + in state 14 resolved as shift
+WARNING: shift/reduce conflict for - in state 14 resolved as shift
+WARNING: shift/reduce conflict for * in state 30 resolved as shift
+WARNING: shift/reduce conflict for + in state 30 resolved as shift
+WARNING: shift/reduce conflict for - in state 30 resolved as shift
+WARNING: shift/reduce conflict for / in state 30 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 30 resolved as shift
+WARNING: shift/reduce conflict for ( in state 30 resolved as shift
+WARNING: shift/reduce conflict for [ in state 30 resolved as shift
+WARNING: shift/reduce conflict for { in state 30 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 30 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 30 resolved as shift
+WARNING: shift/reduce conflict for * in state 31 resolved as shift
+WARNING: shift/reduce conflict for + in state 31 resolved as shift
+WARNING: shift/reduce conflict for - in state 31 resolved as shift
+WARNING: shift/reduce conflict for / in state 31 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 31 resolved as shift
+WARNING: shift/reduce conflict for ( in state 31 resolved as shift
+WARNING: shift/reduce conflict for [ in state 31 resolved as shift
+WARNING: shift/reduce conflict for { in state 31 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 31 resolved as shift
+WARNING: shift/reduce conflict for NAME in state 31 resolved as shift
+WARNING: reduce/reduce conflict in state 28 resolved using rule (sexpression -> sexpression - sexpression)
+WARNING: rejected rule (sexpression -> - sexpression) in state 28
