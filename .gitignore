@@ -1,3 +1,5 @@
 qtrans/node_modules/*
 .*/
 __*/
+qtrans/parsetab.py
+qtrans/parser.out

@@ -1,22 +1,54 @@
 import ply
 import ply.yacc as yacc
 import ply.lex as lex
+import sys
 
 # From example https://github.com/dabeaz/ply/blob/master/example/calc/calc.py
 
+special_num_map = {
+    '₀': 0, '⁰': 0,
+    '₁': 1, '¹': 1,
+    '₂': 2, '²': 2,
+    '₃': 3, '³': 3,
+    '₄': 4, '⁴': 4,
+    '₅': 5, '⁵': 5,
+    '₆': 6, '⁶': 6,
+    '₇': 7, '⁷': 7,
+    '₈': 8, '⁸': 8,
+    '₉': 9, '⁹': 9
+}
+
 tokens = (
-    'NAME', 'NUMBER',
+    'NUMBER', 'NUMBASE', 'NUMEXP', 
+    'SIN', 'COS', 'TAN', 'ASIN', 'ACOS', 'ATAN', 
+    'SQRT', 
+    'EXP', 
+    'VECLABEL',
+    'PI', 'E', 'I'
 )
 
-literals = ['+', '-', '*', '/', '(', ')', '[', ']', '{', '}']
+literals = ['+', '-', '*', '/', '^', '(', ')', '[', ']', '{', '}', '√']
 
 # Tokens
 
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
-
+# t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_SIN = r'sin'
+t_COS = r'cos'
+t_TAN = r'tan'
+t_ASIN = r'asin'
+t_ACOS = r'acos'
+t_ATAN = r'atan'
+t_SQRT = r'sqrt'
+t_EXP = r'exp'
+t_PI = r'pi|π'
+t_E = r'e'
+t_I = r'i'
+t_NUMBASE = r'\d+'
+t_NUMEXP = r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+'
+t_VECLABEL = r'[01]+'
 
 def t_NUMBER(t):
-    r'\d+'
+    r'[\d⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉₀]+'
     t.value = int(t.value)
     return t
 
@@ -39,100 +71,159 @@ precedence = (
     ('left', '+', '-'),
     ('left', '*', '/'),
     ('right', 'UMINUS'),
-    # ('right', 'SIN', 'COS', 'TAN', 'ASIN', 'ACOS', 'ATAN', 'EXP'),
-    # ('left', '^')
+    ('right', 'USQRT'),
+    ('left', '^')
 )
 
 # dictionary of names
-names = {'pi': 'pi', 'π': 'pi', 'e': 'e'}
+names = {}
 
 # def p_statement_assign(p):
 #     'statement : NAME "=" expression'
 #     names[p[1]] = p[3]
 
-def p_vector_expr(p):
-    '''vexpression : sexpression '*' vexpression
-                   | sexpression     vexpression
-                   | vexpression '+' vexpression
-                   | vexpression '-' vexpression
-                   | 'T'
-                   '''
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*' or p[2] == '×' or p[2] == '⋅':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/' or p[2] == '÷':
-        p[0] = p[1] / p[3]
-    else:
-        p[0] = p[1] * p[2]
 
-def p_scalar_expression(p):
-    '''sexpression : sexpression '*' sexpression
-                   | sexpression     sexpression
-                   | sexpression '+' sexpression
-                   | sexpression '-' sexpression
-                   | sexpression '/' sexpression
-                   | sexpression '^' sexpression'''
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/' or p[2] == '÷':
-        p[0] = p[1] / p[3]
-    else:
-        p[0] = p[1] * p[2]
-
-
-def p_statement_expression(p):
-    'statement : sexpression'
+def p_statement_expr(p):
+    'statement : expression'
     print(p[1])
 
-# def p_expression_binop(p):
-#     '''expression : expression '+' expression
-#                   | expression '-' expression
-#                   | expression '*' expression
-#                   | expression expression
-#                   | expression '/' expression'''
-#     if p[2] == '+':
-#         p[0] = p[1] + p[3]
-#     elif p[2] == '-':
-#         p[0] = p[1] - p[3]
-#     elif p[2] == '*' or p[2] == '×' or p[2] == '⋅':
-#         p[0] = p[1] * p[3]
-#     elif p[2] == '/' or p[2] == '÷':
-#         p[0] = p[1] / p[3]
-#     else:
-#         p[0] = p[1] * p[2]
+
+def p_expression_binop(p):
+    '''
+    expression : expression '+' expression
+               | expression '-' expression
+               | expression '*' expression
+               | expression '/' expression
+               | expression '^' expression
+               | expression     expression
+    '''
+    if p[2] == '+':
+        p[0] = ('add_s', p[1], p[3])
+    elif p[2] == '-':
+        p[0] = ('minus_s', p[1], p[3])
+    elif p[2] == '*':
+        p[0] = ('mult_s', p[1], p[3])
+    elif p[2] == '/':
+        p[0] = ('div_s', p[1], p[3])
+    elif p[2] == '^':
+        p[0] = ('pow', p[1], p[3])
+    else:
+        p[0] = ('mult_s', p[1], p[2])
 
 def p_expression_uminus(p):
-    "sexpression : '-' sexpression %prec UMINUS"
-    p[0] = -p[2]
+    "expression : '-' expression %prec UMINUS"
+    p[0] = ('neg', p[1])
 
+def p_group_expression(p):
+    "expression : group"
+    p[0] = p[1]
+
+def p_expression_trig(p):
+    '''
+    expression : SIN group
+               | COS group
+               | TAN group
+               | ASIN group
+               | ACOS group
+               | ATAN group
+    '''
+    p[0] = (p[1], p[2])
+
+def p_expression_exp(p):
+    '''
+    expression : EXP group
+    '''
+    p[0] = ('exp', p[2])
+
+def p_expression_pow(p):
+    '''
+    expression : NUMBASE NUMEXP
+    '''
+    p[0] = ('pow', int(p[1]), special_num_map[p[2]])
+
+# ¹/₂√2π²|00⟩
+def p_expression_sqrt(p):
+    '''
+    expression : SQRT group
+    '''
+    p[0] = ('sqrt', p[2])
+
+def p_expression_usqrt(p):
+    '''
+    expression : '√' expression %prec USQRT
+    '''
+    p[0] = ('sqrt', p[2])
 
 def p_expression_group(p):
-    '''sexpression : '(' sexpression ')'
-                   | '[' sexpression ']'
-                   | '{' sexpression '}' '''
+    '''
+    group : '(' expression ')'
+          | '[' expression ']'
+          | '{' expression '}'
+    '''
     p[0] = p[2]
 
 
 def p_expression_number(p):
-    "sexpression : NUMBER"
+    "expression : NUMBER"
     p[0] = p[1]
 
+def p_expression_const(p):
+    '''
+    expression : PI
+               | 'π'
+               | E
+               | I
+    '''
+    if p[1] == 'π':
+        p[0] = 'pi'
+    else: 
+        p[0] = p[1]
 
-def p_expression_name(p):
-    "sexpression : NAME"
-    try:
-        p[0] = names[p[1]]
-    except LookupError:
-        print("Undefined name '%s'" % p[1])
-        p[0] = None
+def p_vectorexpr_basis(p):
+    '''
+    vectorexpr : '|' VECLABEL '>'
+               | '|' VECLABEL '⟩'
+    '''
+    p[0] = ('vec', p[2])
 
+def p_vectorexpr_binop(p):
+    '''
+    vectorexpr : vectorexpr '+' vectorexpr
+               | vectorexpr '-' vectorexpr
+               | expression '*' vectorexpr
+               | expression     vectorexpr
+    '''
+    if p[2] == '+':
+        p[0] = ('add_v', p[1], p[3])
+    elif p[2] == '-':
+        p[0] = ('minus_v', p[1], p[3])
+    elif p[2] == '*':
+        p[0] = ('mult_v', p[1], p[3])
+    else:
+        p[0] = ('mult_v', p[1], p[2])
+
+def p_vectorexpr_tensor(p):
+    '''
+    vectorexpr : vectorexpr vectorexpr
+    '''
+    p[0] = ('tensor', p[1], p[2])
+
+
+def p_vectorexpr_group(p):
+    '''
+    vectorexpr : '(' vectorexpr ')'
+               | '[' vectorexpr ']'
+               | '{' vectorexpr '}'
+    '''
+    p[0] = p[1]
+
+# def p_expression_name(p):
+#     "expression : NAME"
+#     try:
+#         p[0] = names[p[1]]
+#     except LookupError:
+#         print("Undefined name '%s'" % p[1])
+#         p[0] = 0
 
 def p_error(p):
     if p:
