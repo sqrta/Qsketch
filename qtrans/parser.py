@@ -6,16 +6,16 @@ import sys
 # From example https://github.com/dabeaz/ply/blob/master/example/calc/calc.py
 
 special_num_map = {
-    '₀': 0, '⁰': 0,
-    '₁': 1, '¹': 1,
-    '₂': 2, '²': 2,
-    '₃': 3, '³': 3,
-    '₄': 4, '⁴': 4,
-    '₅': 5, '⁵': 5,
-    '₆': 6, '⁶': 6,
-    '₇': 7, '⁷': 7,
-    '₈': 8, '⁸': 8,
-    '₉': 9, '⁹': 9
+    '₀': '0', '⁰': '0', '0': '0',
+    '₁': '1', '¹': '1', '1': '1',
+    '₂': '2', '²': '2', '2': '2',
+    '₃': '3', '³': '3', '3': '3',
+    '₄': '4', '⁴': '4', '4': '4',
+    '₅': '5', '⁵': '5', '5': '5',
+    '₆': '6', '⁶': '6', '6': '6',
+    '₇': '7', '⁷': '7', '7': '7',
+    '₈': '8', '⁸': '8', '8': '8',
+    '₉': '9', '⁹': '9', '9': '9'
 }
 
 tokens = (
@@ -27,7 +27,7 @@ tokens = (
     'PI', 'E', 'I'
 )
 
-literals = ['+', '-', '*', '/', '^', '(', ')', '[', ']', '{', '}', '√']
+literals = ['+', '-', '*', '/', '^', '(', ')', '[', ']', '{', '}', '√', '|', '>', '⟩']
 
 # Tokens
 
@@ -45,11 +45,11 @@ t_E = r'e'
 t_I = r'i'
 t_NUMBASE = r'\d+'
 t_NUMEXP = r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+'
-t_VECLABEL = r'[01]+'
+t_VECLABEL = r'\|[01]+[>⟩]'
 
 def t_NUMBER(t):
     r'[\d⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉₀]+'
-    t.value = int(t.value)
+    t.value = special_num_map[t.value]
     return t
 
 t_ignore = " \t"
@@ -84,7 +84,7 @@ names = {}
 
 
 def p_statement_expr(p):
-    'statement : expression'
+    'statement : vectorexpr'
     print(p[1])
 
 
@@ -112,7 +112,7 @@ def p_expression_binop(p):
 
 def p_expression_uminus(p):
     "expression : '-' expression %prec UMINUS"
-    p[0] = ('neg', p[1])
+    p[0] = ('neg', p[2])
 
 def p_group_expression(p):
     "expression : group"
@@ -181,10 +181,9 @@ def p_expression_const(p):
 
 def p_vectorexpr_basis(p):
     '''
-    vectorexpr : '|' VECLABEL '>'
-               | '|' VECLABEL '⟩'
+    vectorexpr : VECLABEL
     '''
-    p[0] = ('vec', p[2])
+    p[0] = ('vec', p[1][1 : -1])
 
 def p_vectorexpr_binop(p):
     '''
@@ -215,7 +214,7 @@ def p_vectorexpr_group(p):
                | '[' vectorexpr ']'
                | '{' vectorexpr '}'
     '''
-    p[0] = p[1]
+    p[0] = p[2]
 
 # def p_expression_name(p):
 #     "expression : NAME"
