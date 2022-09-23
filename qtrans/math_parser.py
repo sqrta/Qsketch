@@ -1,3 +1,4 @@
+import math
 import ply
 import ply.yacc as yacc
 import ply.lex as lex
@@ -47,9 +48,12 @@ t_NUMBASE = r'\d+'
 t_NUMEXP = r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+'
 t_VECLABEL = r'\|[01]+[>⟩]'
 
+def to_num(s):
+    return int(''.join(map(lambda c: special_num_map[c], s)))
+
 def t_NUMBER(t):
     r'[\d⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉₀]+'
-    t.value = special_num_map[t.value]
+    t.value = complex(to_num(t.value))
     return t
 
 t_ignore = " \t"
@@ -85,7 +89,7 @@ names = {}
 
 def p_statement_expr(p):
     'statement : vectorexpr'
-    print(p[1])
+    return p[1]
 
 
 def p_expression_binop(p):
@@ -139,7 +143,7 @@ def p_expression_pow(p):
     '''
     expression : NUMBASE NUMEXP
     '''
-    p[0] = ('pow', int(p[1]), special_num_map[p[2]])
+    p[0] = ('pow', complex(to_num(p[1])), complex(to_num(p[2])))
 
 # ¹/₂√2π²|00⟩
 def p_expression_sqrt(p):
@@ -175,9 +179,11 @@ def p_expression_const(p):
                | I
     '''
     if p[1] == 'π':
-        p[0] = 'pi'
-    else: 
-        p[0] = p[1]
+        p[0] = complex(math.pi, 0)
+    elif p[1] == 'e': 
+        p[0] = complex(math.e, 0)
+    elif p[1] == 'i':
+        p[0] = complex(0, 1)
 
 def p_vectorexpr_basis(p):
     '''
@@ -185,12 +191,17 @@ def p_vectorexpr_basis(p):
     '''
     p[0] = ('vec', p[1][1 : -1])
 
+def p_expression_uminus(p):
+    "vectorexpr : '-' vectorexpr %prec UMINUS"
+    p[0] = ('mult_v', complex(-1, 0), p[2])
+
 def p_vectorexpr_binop(p):
     '''
     vectorexpr : vectorexpr '+' vectorexpr
                | vectorexpr '-' vectorexpr
                | expression '*' vectorexpr
                | expression     vectorexpr
+               | vectorexpr '/' expression
     '''
     if p[2] == '+':
         p[0] = ('add_v', p[1], p[3])
@@ -198,15 +209,10 @@ def p_vectorexpr_binop(p):
         p[0] = ('minus_v', p[1], p[3])
     elif p[2] == '*':
         p[0] = ('mult_v', p[1], p[3])
+    elif p[2] == '/':
+        p[0] = ('mult_v', ('div_s', 1, p[3]), p[1])
     else:
         p[0] = ('mult_v', p[1], p[2])
-
-def p_vectorexpr_tensor(p):
-    '''
-    vectorexpr : vectorexpr vectorexpr
-    '''
-    p[0] = ('tensor', p[1], p[2])
-
 
 def p_vectorexpr_group(p):
     '''
@@ -232,6 +238,9 @@ def p_error(p):
 
 parser = yacc.yacc()
 
+def parse(s):
+    return yacc.parse(s)
+
 while True:
     try:
         s = input('calc > ')
@@ -239,4 +248,4 @@ while True:
         break
     if not s:
         continue
-    yacc.parse(s)
+    print(yacc.parse(s))
