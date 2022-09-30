@@ -2,6 +2,9 @@
 # initial state
 INITIAL = 'initial'
 
+# final state
+FINAL = 'final'
+
 # circuit object name
 CIRCUIT = 'circuit'
 
