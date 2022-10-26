@@ -13,11 +13,10 @@ function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "qtrans" is now active!');
-
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('qtrans.fillhole', function () {
+	let disposable2 = vscode.commands.registerCommand('qtrans.gen_oracle', function () {
 		// The code you place here will be executed every time your command is executed
 		const express=require('express');
 		const app=express();
@@ -25,6 +24,44 @@ function activate(context) {
 		//Import PythonShell module.
 		const {PythonShell} =require('python-shell');
 		PythonShell.runString('print(1+1)');
+		// Display a message box to the user
+		const editor = vscode.window.activeTextEditor;
+		const selection = editor.selection;
+		if (selection && !selection.isEmpty) {
+			const selectionRange = new vscode.Range(selection.start.line, selection.start.character, selection.end.line, selection.end.character);
+			const highlighted = editor.document.getText(selectionRange);
+			vscode.window.showInformationMessage("oracle");
+
+			
+			var fs = require("fs");
+			const tmppath = __dirname+'\\tmp.txt';
+			fs.writeFile(tmppath, highlighted, function (err) {
+				if (err) {
+				  return console.error(err);
+				}
+				const execSync = require('child_process').execSync;
+			
+				const command = 'python '+__dirname+'\\oracle.py '+__dirname+'\\tmp_oracle.txt';
+				console.log(command)
+				const output = execSync(command, { encoding: 'utf-8' });  // the default is 'buffer'
+				console.log('Output was:\n', output);
+				const editRange = editor.document.lineAt(editor.selection.end.line).range.end;
+				editor.edit(editBuilder => {
+					editBuilder.insert(editRange, output)
+				});
+			});
+
+		}
+	});
+
+	context.subscriptions.push(disposable2);
+	let disposable = vscode.commands.registerCommand('qtrans.fillhole', function () {
+		// The code you place here will be executed every time your command is executed
+		const express=require('express');
+		const app=express();
+		
+		//Import PythonShell module.
+		const {PythonShell} =require('python-shell');
 		// Display a message box to the user
 		const editor = vscode.window.activeTextEditor;
 		const selection = editor.selection;

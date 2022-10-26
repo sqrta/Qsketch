@@ -1,5 +1,6 @@
-# Spec {qubit:2, initial: 00} 
-circ.ry(??, 0)
-ch0=HGate().control(ctrl_sstate=0)
-circ.append(ch0, [0,1])
-# Spec {final: 1/sqrt(3) (00+01+10)}
+# Oracle 3->3->1
+def mod8(x,y):
+    if (x+y)%8==0:
+        return 1
+    else:
+        return 0

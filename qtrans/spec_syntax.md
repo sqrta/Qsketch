@@ -28,7 +28,7 @@ $$
 
 - $LParen$ and $RParen$ are a pair of any brackets (parenthesis, square brackets or curly braces). However, they must come in pairs. 
 - $\N$ is any natural number characters, including superscripts and subscripts.
-- $Binop$ are the 4 arithmetic operations and power ($\textasciicircum$)
+- $Binop$ are the 4 arithmetic operations and power ^
 - $Uniop$ are $\sqrt{}$, and trigonometric functions ($\sin$, $\cos$, $\tan$) and their inverses
 
 For example, these are all valid syntax: 
