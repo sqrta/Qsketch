@@ -8,7 +8,6 @@ circ = QuantumCircuit(3)
 # Spec { 'qubit':2, 'initial': |00> } 
 circ.__1(__, 0)
 circ.rx(1, 0)
-qiskit.circuit.library.standard_gates.ch
 ch0=HGate().control(ctrl_state=0)
 circ.append(ch0, [0,1])
 # Spec { final: ¹/√3 (|00⟩ + |01⟩ + |10⟩) }
